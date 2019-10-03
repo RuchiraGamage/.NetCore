@@ -11,6 +11,5 @@ namespace CakeShop.Models
         public string CategoryName { get; set; }
         public string Discription { get; set; }
         public List<Pie> Pies { get; set; }
-
     }
 }
