@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		global.json = global.json
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{662252BC-621E-44EE-B6F5-EF5B699683B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,7 +27,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{B1ACD209-0B2D-443C-9E45-9152A94D76D0} = {2A582A13-559F-4CFF-AE51-02386889BD4E}
+		{B1ACD209-0B2D-443C-9E45-9152A94D76D0} = {662252BC-621E-44EE-B6F5-EF5B699683B5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F9A7F386-E305-40F8-B3B4-EE31637750BE}
