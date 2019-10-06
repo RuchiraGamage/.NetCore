@@ -64,6 +64,10 @@ footer {
 .navbar {
     background-image: none;
 }
+.navbar-fixed-top {
+    top: 0;
+    border-width: 0 0 1px;
+}
 
 .navbar-inverse {
     background-color: #a593c2;
