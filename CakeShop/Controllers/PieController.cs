@@ -21,14 +21,28 @@ namespace CakeShop.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        public ViewResult List()
+        public ViewResult List(string category)
         {
-            PieListViewModel pieListViewModel = new PieListViewModel
+            IEnumerable<Pie> pies;
+            string currentCategory = string.Empty;
+
+            if (string.IsNullOrEmpty(category))
             {
-                Pies = _pieRepository.Pies,
-                CurrentCategory = "Cheese cake"
-            };
-            return View(pieListViewModel);
+                pies = _pieRepository.Pies.OrderBy(p => p.Id);
+                currentCategory = "All pies";
+            }
+            else
+            {
+                pies = _pieRepository.Pies.Where(p => p.Category.CategoryName == category)
+                    .OrderBy(p => p.Id);
+                currentCategory = _categoryRepository.Categories.FirstOrDefault(c => c.CategoryName == category).CategoryName;
+            }
+
+            return View(new PieListViewModel
+            {
+                Pies =pies,
+                CurrentCategory = currentCategory
+            });
         }
 
     }

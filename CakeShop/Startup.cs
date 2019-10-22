@@ -6,6 +6,7 @@ using CakeShop.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,6 +37,7 @@ namespace CakeShop
             services.AddTransient<IPieRepository, PieRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));
+            services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddMvc();
 
             services.AddMemoryCache();
@@ -50,7 +52,25 @@ namespace CakeShop
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseSession();
-            app.UseMvcWithDefaultRoute();
+
+            app.UseMvc(routes =>
+            {
+
+                routes.MapRoute(
+                    name:"categoryFilter",
+                    template:"Pie/{action}/{category?}",
+                    defaults:new {controller="Pie",action="List"}
+                    );
+
+            routes.MapRoute(
+                name: "default",    //route name
+                template: "{controller=Home}/{action=Index}/{id?}"     //pattern
+                //  defaults:new {controller="Home",action="Index"}
+                );
+
+            });
+
+          // app.UseMvcWithDefaultRoute();//{controller=Home}/{action=index}/{id?}
 
           //  We recommend that you use the Configure method only to set up the request pipeline.Application startup code belongs in the Main method
 

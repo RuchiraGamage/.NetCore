@@ -22,6 +22,7 @@ namespace CakeShop.Coponents
         public IViewComponentResult Invoke()
         {
             var items = _shoppingCart.GetShoppingCartItems();
+
             _shoppingCart.ShoppingCartItems = items;
 
             var shoppingCartViewModel = new ShoppingCartViewModel
