@@ -6,6 +6,7 @@ using CakeShop.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -28,11 +29,19 @@ namespace CakeShop
 
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        //register those services
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbcontext>(options =>
                     options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
+
+            //here if we want to add more databases for store information like login information in seperate DB
+            //we can register them as above and can also use those seperate DB's to store identity details by
+            //parsing those context to the below ".AddEntityFrameworkStores<AppDbcontext>();" parameter
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbcontext>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IPieRepository, PieRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -45,6 +54,7 @@ namespace CakeShop
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        //middleware
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
 
@@ -52,10 +62,10 @@ namespace CakeShop
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseSession();
+            app.UseIdentity();
 
             app.UseMvc(routes =>
             {
-
                 routes.MapRoute(
                     name:"categoryFilter",
                     template:"Pie/{action}/{category?}",
