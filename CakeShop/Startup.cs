@@ -24,6 +24,7 @@ namespace CakeShop
             _configurationRoot = new ConfigurationBuilder()
                 .SetBasePath(hostingEnvironment.ContentRootPath)
                 .AddJsonFile("appsettings.json")
+               // .AddJsonFile($"appsettings.{hostingEnvironment.EnvironmentName}.json",true)
                 .Build();
         }
 
@@ -57,9 +58,16 @@ namespace CakeShop
         //middleware
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-
-            app.UseDeveloperExceptionPage();
-            app.UseStatusCodePages();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseStatusCodePages();
+                app.UseDatabaseErrorPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/AppException");
+            }
             app.UseStaticFiles();
             app.UseSession();
             app.UseIdentity();

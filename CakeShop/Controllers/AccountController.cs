@@ -63,7 +63,8 @@ namespace CakeShop.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
+        // [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(LoginViewModel loginViewModel)
         {
             if (ModelState.IsValid)
